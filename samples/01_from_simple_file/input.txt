@@ -1,0 +1,24 @@
+% Informatique - listes - project sample 
+% Nicolas Rousset
+% 7 mai 2020
+
+
+# Exercice n 1
+
+Ecrire une fonction qui prend un argument n et renvoit une liste des n premiers nombres entiers
+
+~~~
+~~~
+
+# Exercice n 2
+
+Corriger le code suivant, qui prend en argument un entier n et devrait renvoyer la liste des n premiers entiers au carré.
+
+~~~
+def square_list(n):
+    res = []
+    for it in range(n):
+        res.append(n**2)
+        return res 
+~~~
+
