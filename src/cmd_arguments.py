@@ -7,7 +7,9 @@ def getArgumentParser():
     parser.add_argument('-r', dest='recursive', action='store_true',
                         help='Explore recursively the directory given as dir')
     parser.add_argument('--correction-mode', type=int, default=0)
-    
+    parser.add_argument('--output', default='jupyter_out.ipynb')
+
+
     args = parser.parse_args()
 
     return args

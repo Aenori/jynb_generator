@@ -10,15 +10,32 @@ Ecrire une fonction qui prend un argument n et renvoit une liste des n premiers 
 ~~~
 ~~~
 
+~~~ # Correction
+def listePremierNombre(n):
+  res = []
+  for it in range(n):
+    res.append(it)
+
+  return res
+~~~
+
 # Exercice n 2
 
 Corriger le code suivant, qui prend en argument un entier n et devrait renvoyer la liste des n premiers entiers au carré.
 
 ~~~
 def square_list(n):
-    res = []
-    for it in range(n):
-        res.append(n**2)
-        return res 
+  res = []
+  for it in range(n):
+    res.append(n**2)
+    return res 
+~~~
+
+~~~ # Correction
+def square_list(n):
+  res = []
+  for it in range(n):
+    res.append(n**2)
+  return res 
 ~~~
 

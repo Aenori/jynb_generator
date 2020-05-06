@@ -17,12 +17,14 @@ def getFileList(args):
      else:
        raise Exception(f'Unknown source : {it_source}')
 
+  return file_list
+
 def main():
   args = cmd_arguments.getArgumentParser()
 
   file_list = getFileList(args)
 
-  convertFileListToNotebook(file_list)
+  convertFileListToNotebook(file_list, args.output)
 
 if __name__ == '__main__':
   main()
