@@ -5,18 +5,26 @@
 
 # Exercice n 1
 
-Ecrire une fonction qui prend un argument n et renvoit une liste des n premiers nombres entiers
+Ecrire une fonction *listeNombresPremiers* qui prend un argument n et renvoit une liste des n premiers nombres entiers
 
 ~~~
+# Mettez votre code ici
+
+# Ne pas modifier les lignes ci-dessous
+testerListeNombresPremiers(listeNombresPremiers)
 ~~~
 
 ~~~ # Correction
 def listePremierNombre(n):
-  res = []
-  for it in range(n):
-    res.append(it)
+    res = []
+    for it in range(n):
+        res.append(it)
 
-  return res
+    return res
+~~~
+
+~~~ # Test unitaire
+
 ~~~
 
 # Exercice n 2
@@ -25,17 +33,17 @@ Corriger le code suivant, qui prend en argument un entier n et devrait renvoyer 
 
 ~~~
 def square_list(n):
-  res = []
-  for it in range(n):
-    res.append(n**2)
-    return res 
+    res = []
+    for it in range(n):
+        res.append(n**2)
+        return res 
 ~~~
 
 ~~~ # Correction
 def square_list(n):
-  res = []
-  for it in range(n):
-    res.append(n**2)
-  return res 
+    res = []
+    for it in range(n):
+        res.append(n**2)
+    return res 
 ~~~
 
