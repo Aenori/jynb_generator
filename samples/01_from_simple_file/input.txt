@@ -15,35 +15,66 @@ testerListeNombresPremiers(listeNombresPremiers)
 ~~~
 
 ~~~ # Correction
-def listePremierNombre(n):
-    res = []
-    for it in range(n):
-        res.append(it)
+def estPremier(n):
+    for k in range(2, int(n**0.5 + 1)):
+        if n % k == 0:
+            return False
+        
+    return True
 
-    return res
+def listeNombresPremiers(n):
+    res = []
+    for it in range(2, (n+3)**2):
+        if estPremier(it):
+            res.append(it)
+            if len(res) == n:
+                return res
+
+testerListeNombresPremiers(listeNombresPremiers)
 ~~~
 
 ~~~ # Test unitaire
+import tu_utils
 
+def testerListeNombresPremiers(listeNombresPremiers):
+    tu_utils.checkResult([2], listeNombresPremiers, [1])
+    tu_utils.checkResult([2, 3], listeNombresPremiers, [2])
+    tu_utils.checkResult([2, 3, 5, 7], listeNombresPremiers, [4])
+    tu_utils.checkResultSilent([2, 3, 5, 7, 11, 13], listeNombresPremiers, [6])
 ~~~
 
 # Exercice n 2
 
-Corriger le code suivant, qui prend en argument un entier n et devrait renvoyer la liste des n premiers entiers au carré.
+Corriger le code suivant, qui prend en argument un entier n et devrait renvoyer la liste des n premiers entiers (à partir de 1) au carré.
 
 ~~~
-def square_list(n):
+# Modifiez le code ci-dessous
+def squareList(n):
     res = []
     for it in range(n):
         res.append(n**2)
-        return res 
+        return res
+
+# Ne pas modifier les lignes ci-dessous
+testerSquareList(squareList)
 ~~~
 
 ~~~ # Correction
-def square_list(n):
+def squareList(n):
     res = []
     for it in range(n):
         res.append(n**2)
-    return res 
+    return res
+
+testerSquareList(squareList)
 ~~~
 
+~~~ # Test unitaire
+import tu_utils
+
+def testerSquareList(squareList):
+    tu_utils.checkResult([1], squareList, [1])
+    tu_utils.checkResult([1, 4], squareList, [2])
+    tu_utils.checkResult([1, 4, 9, 16], squareList, [4])
+    tu_utils.checkResultSilent([1, 4, 9, 16, 25, 36], squareList, [6])
+~~~

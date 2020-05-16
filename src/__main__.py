@@ -1,13 +1,21 @@
-import education_converter
+import os
+
 import cmd_arguments
-from file_to_jupyter_notebook import convertFileListToNotebook
+from file_to_jupyter_notebook import FileToJupyterNotebook
 
 def main():
     args = cmd_arguments.getArgumentParser()
 
+    if args.debug:
+        
+
     file_list = getFileList(args)
 
-    convertFileListToNotebook(file_list, args.output)
+    file_to_jupyter_notebook = FileToJupyterNotebook(
+        write_unittest_file = args.write_unittest_file, 
+        add_correction = args.add_correction
+    )
+    file_to_jupyter_notebook.convertFileListToNotebook(file_list, args.output)
 
 def extractFilesFromSourceDir(source_dir, recursive):
     raise NotImplementedError()  
