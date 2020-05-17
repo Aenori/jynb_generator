@@ -1,10 +1,13 @@
 from enum import Enum
 import json
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_METADATA_FILE = 'src/jynb_metadata.json'
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+DEFAULT_METADATA_FILE = f'{dir_path}/jynb_metadata.json'
 TO_BE_MODIFIED = None
 
 JUPYTER_NOTEBOOK_TEMPLATE =   {
