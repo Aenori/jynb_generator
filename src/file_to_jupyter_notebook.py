@@ -36,7 +36,7 @@ class FileToJupyterNotebook:
         for it_file in file_list:
             cell_list.extend(self.__convertFileToCells(it_file))
 
-        with open(metadata_file, 'r') as f:
+        with open(self.metadata_file, 'r') as f:
             json_data = json.load(f)
             json_data['cells'] = cell_list
 
@@ -77,7 +77,7 @@ class FileToJupyterNotebook:
                     cell_list.append({'type' : current_cell_type, 'source' : current_cell_source})
                     current_cell_source = []
 
-                    current_cell_type = findCurrentCelltype(current_cell_type)
+                    current_cell_type = self.__findCurrentCelltype(it_line, current_cell_type)
                     
                     logger.debug(f"Line {it_line_number} => {current_cell_type}")
                 else:
@@ -88,10 +88,10 @@ class FileToJupyterNotebook:
 
         return cell_list
 
-    def __findCurrentCelltype(self, current_cell_type):
-        if it_line.startswith('~~~ #'):
+    def __findCurrentCelltype(self, line, current_cell_type):
+        if line.startswith('~~~ #'):
             assert(current_cell_type == CellType.MARKDOWN)
-            cell_type = it_line[5:].strip()
+            cell_type = line[5:].strip()
             current_cell_type = TAG_TO_TYPE[cell_type]
         elif current_cell_type == CellType.MARKDOWN:
             current_cell_type = CellType.CODE

@@ -1,13 +1,15 @@
 import os
+import logging
 
 import cmd_arguments
 from file_to_jupyter_notebook import FileToJupyterNotebook
 
 def main():
     args = cmd_arguments.getArgumentParser()
+    print(args)
 
     if args.debug:
-        
+        setDefaultDebugLogging()
 
     file_list = getFileList(args)
 
@@ -16,6 +18,15 @@ def main():
         add_correction = args.add_correction
     )
     file_to_jupyter_notebook.convertFileListToNotebook(file_list, args.output)
+
+def setDefaultDebugLogging():
+    logFormatter = logging.Formatter("%(asctime)s [%(levelname)-5.5s]  %(message)s")
+    rootLogger = logging.getLogger()
+    rootLogger.setLevel(logging.DEBUG)
+    
+    consoleHandler = logging.StreamHandler()
+    consoleHandler.setFormatter(logFormatter)
+    rootLogger.addHandler(consoleHandler)
 
 def extractFilesFromSourceDir(source_dir, recursive):
     raise NotImplementedError()  
