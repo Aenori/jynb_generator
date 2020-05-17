@@ -1,5 +1,6 @@
 import os
 import logging
+import subprocess
 
 import cmd_arguments
 from file_to_jupyter_notebook import FileToJupyterNotebook
@@ -15,9 +16,12 @@ def main():
 
     file_to_jupyter_notebook = FileToJupyterNotebook(
         write_unittest_file = args.write_unittest_file, 
-        add_correction = args.add_correction
+        correction_mode = args.correction
     )
     file_to_jupyter_notebook.convertFileListToNotebook(file_list, args.output)
+
+    if args.run:
+        subprocess.check_output(['jupyter', 'nbconvert', '--execute', 'jupyter_out.ipynb'])
 
 def setDefaultDebugLogging():
     logFormatter = logging.Formatter("%(asctime)s [%(levelname)-5.5s]  %(message)s")

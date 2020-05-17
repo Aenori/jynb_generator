@@ -21,23 +21,28 @@ class CellType(Enum):
     CODE = 1
     CORRECTION = 2
     UNITTEST = 3
+    EXERCICE_PLACEHOLDER = 4
 
 TAG_TO_TYPE = {
     'Correction' : CellType.CORRECTION,
     'Test unitaire' : CellType.UNITTEST,
+    'Exercice placeholder' : CellType.EXERCICE_PLACEHOLDER,
 }
 
 class FileToJupyterNotebook:
-    def __init__(self, write_unittest_file = False, add_correction = False, metadata_file = DEFAULT_METADATA_FILE):
+    def __init__(self, write_unittest_file = False, correction_mode = False, metadata_file = DEFAULT_METADATA_FILE):
         self.metadata_file = metadata_file
-        self.write_unittest_file = False
-        self.add_correction = False
+        self.write_unittest_file = write_unittest_file
+        self.correction_mode = correction_mode
 
     def convertFileListToNotebook(self, file_list, output):
         cell_list = []
+        tu_list = []
 
         for it_file in file_list:
-            cell_list.extend(self.__convertFileToCells(it_file))
+            it_cell_list, it_tu_list = self.__convertFileToCells(it_file)
+            cell_list.extend(it_cell_list)
+            tu_list.extend(it_tu_list)
 
         with open(self.metadata_file, 'r') as f:
             json_data = json.load(f)
@@ -48,7 +53,22 @@ class FileToJupyterNotebook:
 
     def __convertFileToCells(self, source_file):
         cell_list_raw = self.__extractCellsFromSourceFile(source_file)
-        return [self.__convertRawToJupyter(it_raw_cell) for it_raw_cell in cell_list_raw]
+
+        unittest_codes = list(filter(lambda x : x['type'] == CellType.UNITTEST, cell_list_raw))
+        cell_list_nb_raw = list(filter(self.__includeCellInNotebook, cell_list_raw))
+
+        return [self.__convertRawToJupyter(it_raw_cell) for it_raw_cell in cell_list_nb_raw], unittest_codes
+
+    def __includeCellInNotebook(self, it_raw_cell):
+        print((self.correction_mode, it_raw_cell['type']))
+
+        if it_raw_cell['type'] == CellType.UNITTEST:
+            return False
+            
+        if self.correction_mode:
+            return it_raw_cell['type'] != CellType.EXERCICE_PLACEHOLDER
+        else:
+            return it_raw_cell['type'] != CellType.CORRECTION
 
     def __convertRawToJupyter(self, it_raw_cell):
         jupyter_cell = JUPYTER_NOTEBOOK_TEMPLATE.copy()

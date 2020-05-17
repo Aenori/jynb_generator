@@ -11,7 +11,7 @@ def getArgumentParser():
 
     parser.add_argument('-d', '--debug', dest='debug', action='store_true', help='Increase verbosity of output to debug')
     parser.add_argument('--write_unittest_file', dest='write_unittest_file', action='store_true', help='Write the unitest file associated with the notebook')
-    parser.add_argument('--add_correction', dest='add_correction', action='store_true')
+    parser.add_argument('--correction', dest='correction', action='store_true')
     parser.add_argument('--run', dest='run', action='store_true', )
 
     args = parser.parse_args()
