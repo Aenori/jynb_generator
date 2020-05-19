@@ -2,6 +2,7 @@ from enum import Enum
 import json
 import logging
 import os
+import shutil
 
 logger = logging.getLogger(__name__)
 
@@ -48,8 +49,36 @@ class FileToJupyterNotebook:
             json_data = json.load(f)
             json_data['cells'] = cell_list
 
+        unittest_filename = self.__extractUnittestFilename(output)
+        self.__writeUnittestFile(unittest_filename, tu_list)
+
         with open(output, 'w') as output_f:
-            output_f.write(json.dumps(json_data, indent=2, sort_keys=True))
+            file_content = json.dumps(json_data, indent=2, sort_keys=True)
+            file_content = self.__replaceMagicKeys(file_content, unittest_filename)
+            output_f.write(file_content)
+        
+    def __writeUnittestFile(self, unittest_filename, tu_list):
+        shutil.copy(f"{dir_path}/gen_utils/tu_utils.py", "tu_utils.py")
+
+        with open(unittest_filename, 'w') as out_unittest_f:
+            out_unittest_f.write('import unittest\nimport sys\n\nimport tu_utils\n\n')
+            out_unittest_f.write('this_module = sys.modules[__name__]\n')
+
+            for tu in tu_list:
+                out_unittest_f.write(''.join(tu['source']))
+                out_unittest_f.write('\n\n')
+
+    def __extractUnittestFilename(self, output):
+        unittest_filename = output.replace('.ipynb', '')
+        if unittest_filename.endswith('_correction'):
+            unittest_filename = unittest_filename.replace('_correction', '')
+
+        return f"{unittest_filename}_unittest.py"
+
+    def __replaceMagicKeys(self, file_content, unittest_filename):
+        file_content = file_content.replace('@JUPYTER_UNITEST_NAME', unittest_filename[:-3])
+
+        return file_content
 
     def __convertFileToCells(self, source_file):
         cell_list_raw = self.__extractCellsFromSourceFile(source_file)

@@ -36,13 +36,17 @@ jpnb_unit.testerListeNombresPremiers(listeNombresPremiers)
 ~~~
 
 ~~~ # Test unitaire
-import tu_utils
+class TesterListeNombresPremiers(unittest.TestCase):
+    def testSimples(self):
+        self.assertEquals([2], listeNombresPremiers(1))
+        self.assertEquals([2, 3], listeNombresPremiers(2))
+        self.assertEquals([2, 3, 5, 7], listeNombresPremiers(4))
+        self.assertEquals([2, 3, 5, 7, 11, 13], listeNombresPremiers(6))
 
 def testerListeNombresPremiers(listeNombresPremiers):
-    tu_utils.checkResult([2], listeNombresPremiers, [1])
-    tu_utils.checkResult([2, 3], listeNombresPremiers, [2])
-    tu_utils.checkResult([2, 3, 5, 7], listeNombresPremiers, [4])
-    tu_utils.checkResultSilent([2, 3, 5, 7, 11, 13], listeNombresPremiers, [6])
+    setattr(this_module, 'listeNombresPremiers', listeNombresPremiers)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TesterListeNombresPremiers)
+    unittest.TextTestRunner(verbosity=2).run(suite)
 ~~~
 
 # Exercice n 2
@@ -58,22 +62,22 @@ def squareList(n):
         return res
 
 # Ne pas modifier les lignes ci-dessous
-testerSquareList(squareList)
+import @JUPYTER_UNITEST_NAME as jpnb_unit
+jpnb_unit.testerSquareList(squareList)
 ~~~
 
 ~~~ # Correction
 def squareList(n):
     res = []
-    for it in range(n):
-        res.append(n**2)
+    for it in range(1, n+1):
+        res.append(it**2)
     return res
 
-testerSquareList(squareList)
+import @JUPYTER_UNITEST_NAME as jpnb_unit
+jpnb_unit.testerSquareList(squareList)
 ~~~
 
 ~~~ # Test unitaire
-import tu_utils
-
 def testerSquareList(squareList):
     tu_utils.checkResult([1], squareList, [1])
     tu_utils.checkResult([1, 4], squareList, [2])

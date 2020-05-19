@@ -3,6 +3,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# My own, custom, files
+jupyter_out.html
+jupyter_out.ipynb
+jupyter_out_unittest.py
+tu_utils.py
+
 # C extensions
 *.so
 

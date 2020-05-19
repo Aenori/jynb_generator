@@ -21,7 +21,7 @@ def main():
     file_to_jupyter_notebook.convertFileListToNotebook(file_list, args.output)
 
     if args.run:
-        subprocess.check_output(['jupyter', 'nbconvert', '--execute', 'jupyter_out.ipynb'])
+        subprocess.check_output(['jupyter', 'nbconvert', '--inplace', '--execute', 'jupyter_out.ipynb'])
 
 def setDefaultDebugLogging():
     logFormatter = logging.Formatter("%(asctime)s [%(levelname)-5.5s]  %(message)s")
